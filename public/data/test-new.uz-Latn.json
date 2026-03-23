@@ -1,0 +1,86 @@
+[
+  {
+    "Statement": "Narsalarni buzib, ichini ko‘rish yoki ularni tuzatishni yoqtiraman.",
+    "Category": "technology"
+  },
+  {
+    "Statement": "O‘zim robot, dastur yoki kichik loyiha yasab ko‘rishni xohlayman.",
+    "Category": "technology"
+  },
+  {
+    "Statement": "Hisob-kitob qilish yoki jumboqlarni yechishni yoqtiraman.",
+    "Category": "technology"
+  },
+  {
+    "Statement": "Qanday ishlashini bilish uchun texnika yoki mexanizmlarni ko‘rishni yaxshi ko‘raman.",
+    "Category": "technology"
+  },
+  {
+    "Statement": "Kompyuter yoki telefon orqali yangi dasturlarni o‘rganish menga qiziq.",
+    "Category": "technology"
+  },
+  {
+    "Statement": "Nimalarnidir loyihalash, chizma chizish yoki yangi g‘oya o‘ylab topishni yoqtiraman.",
+    "Category": "technology"
+  },
+  {
+    "Statement": "O‘ylab topgan narsam boshqalarni hayratda qoldirsa, juda xursand bo‘laman.",
+    "Category": "technology"
+  },
+  {
+    "Statement": "Rasm chizish, qo‘shiq aytish yoki sahnada chiqish menga yoqadi.",
+    "Category": "art"
+  },
+  {
+    "Statement": "Teatr, muzey yoki ko‘rgazmaga borish men uchun zavqli.",
+    "Category": "art"
+  },
+  {
+    "Statement": "O‘zim yozgan hikoya yoki she’rni boshqalarga o‘qib berishni yoqtiraman.",
+    "Category": "art"
+  },
+  {
+    "Statement": "Bo‘sh vaqtimda kitob o‘qish yoki musiqa tinglash bilan shug‘ullanaman.",
+    "Category": "art"
+  },
+  {
+    "Statement": "Narsalarni chiroyli qilish, bezash yoki dizaynini o‘ylab topishni yoqtiraman.",
+    "Category": "art"
+  },
+  {
+    "Statement": "Do‘stlarim meni ijodkor deb hisoblashadi.",
+    "Category": "art"
+  },
+  {
+    "Statement": "Yangi uslub yoki san’at sirlarini o‘rganishga harakat qilaman.",
+    "Category": "art"
+  },
+  {
+    "Statement": "Hayvonlarga g‘amxo‘rlik qilishni yoki ularni boqishni yoqtiraman.",
+    "Category": "nature"
+  },
+  {
+    "Statement": "O‘simlik ekish va ularni parvarish qilish menga yoqadi.",
+    "Category": "nature"
+  },
+  {
+    "Statement": "Tabiatda nimalar qanday o‘sishini va o‘zgarishini kuzatishni yoqtiraman.",
+    "Category": "nature"
+  },
+  {
+    "Statement": "Hayvonlar yoki tabiat haqida hujjatli filmlar tomosha qilish menga qiziq.",
+    "Category": "nature"
+  },
+  {
+    "Statement": "Tabiat haqida yangi narsalarni o‘rganishni xohlayman.",
+    "Category": "nature"
+  },
+  {
+    "Statement": "Tajribalar o‘tkazish yoki kuzatuvlar qilish menga zavq beradi.",
+    "Category": "nature"
+  },
+  {
+    "Statement": "Hayvonlar va o‘simliklar bilan bog‘liq kasblar (vrach, biolog) haqida o‘ylab ko‘rganman.",
+    "Category": "nature"
+  }
+]

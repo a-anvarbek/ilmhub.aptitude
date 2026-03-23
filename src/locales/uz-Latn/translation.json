@@ -1,0 +1,43 @@
+{
+  "yes": "Ha 👍",
+  "no": "Yo'q 👎",
+  "home-banner-title": "<h1 class=\"display-1 fw-semi-bold text-body-emphasis lh-1 mb-3 f-sister\">Farzandingiz uchun <span class=\"text-primary\">qobilyat</span> <span class=\"text-success\">testi</span></h1>",
+  "home-banner-subtitle": "<p class=\"lead fs-4\"><strong class=\"text-secondary\">Ilmhub Qobiliyat Testi</strong> — 7-13 yoshdagi bolalaringizning tabiiy fanlar, san'at yoki dasturlash sohalarida qobiliyatlarini aniqlash uchun mo'ljallangan test.</p>",
+  "start-button": "Hoziroq aniqlaymiz",
+  "hidden-abilities-title": "Yashirin Qobiliyatlar",
+  "contact-title": "Bog'laning",
+  "instagram-title": "Instagram",
+  "instagram-handle": "ilmhub.uz",
+  "telegram-title": "Telegram",
+  "telegram-handle": "ilmhubuz",
+  "phone-title": "Telefon",
+  "phone-number": "93 886 9898",
+  "ok-understood": "Ok, tushunarli",
+
+  "art-explanation": "Sizda <strong class=\"text-success\">san'at</strong>ga bo'lgan ijodiy qiziqish mavjud.",
+  "nature-explanation": "Siz <strong class=\"text-success\">tabiiy fanlar</strong>ga katta qiziqishga egasiz.",
+  "technology-explanation": "Siz <strong class=\"text-success\">texnologiya va IT</strong>ga moyilsiz.",
+  "technology": "IT va Texnologiya",
+  "nature": "Tabiiy fanlar",
+  "art": "San'at va ijodkorlik",
+  "chart-title": "Baholar nisbati",
+
+  "modal.title": "Test topshiruvchi?",
+  "modal.name-placeholder": "O'quvchi ismi",
+  "modal.name-warning": "Iltimos, o'quvchi ismini kiriting (kamida 3ta belgi).",
+  "modal.phone-placeholder": "Ota-ona raqami",
+  "modal.phone-warning": "Iltimos, telefon raqamini kiriting.",
+  "modal.submit-button": "Boshladik",
+  "modal.grade-placeholder": "Nechinchi sinfsiz?",
+  "modal.grade-warning": "Iltimos, sinfni tanlang.",
+  "modal.select-filial": "Filial tanlang",
+  "modal.select-filial-warning": "Iltimos, filialni tanlang.",
+
+  "filials": {
+    "namangan-uychi": "Namangan (Uychi)",
+    "namangan-shahar": "Namangan (Shahar)",
+    "chimgan": "Chimgan",
+    "feruza": "Feruza",
+    "yunusobod": "Yunusobod"
+  }
+}

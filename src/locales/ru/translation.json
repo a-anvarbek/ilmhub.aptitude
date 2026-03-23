@@ -1,0 +1,43 @@
+{
+  "yes": "Да 👍",
+  "no": "Нет 👎",
+  "home-banner-title": "<h1 class=\"display-1 fw-semi-bold text-body-emphasis lh-1 mb-3 f-sister\">Тест на <span class=\"text-primary\">способности</span> <span class=\"text-success\">для вашего ребенка</span></h1>",
+  "home-banner-subtitle": "<p class=\"lead fs-4\"> <strong class=\"text-secondary\">Тест на способности Ilmhub</strong> — предназначен для определения способностей ваших детей в области естественных наук, искусства или программирования.</p>",
+  "start-button": "Узнаем прямо сейчас",
+  "hidden-abilities-title": "Скрытые Способности",
+  "contact-title": "Связаться",
+  "instagram-title": "Instagram",
+  "instagram-handle": "ilmhub.uz",
+  "telegram-title": "Telegram",
+  "telegram-handle": "ilmhubuz",
+  "phone-title": "Телефон",
+  "phone-number": "93 886 9898",
+  "ok-understood": "Ок, понятно",
+
+  "art-explanation": "У вас есть творческий интерес к <strong class=\"text-success\">искусству</strong>.",
+  "nature-explanation": "У вас есть большой интерес к <strong class=\"text-success\">естественным наукам</strong>.",
+  "technology-explanation": "Вы склонны к <strong class=\"text-success\">технологиям и ИТ</strong>.",
+  "technology": "ИТ и Технологии",
+  "nature": "Естественные науки",
+  "art": "Искусство и творчество",
+  "chart-title": "Соотношение интересов",
+
+  "modal.title": "Участник теста?",
+  "modal.name-placeholder": "Имя ученика",
+  "modal.name-warning": "Введите имя ученика (не менее 3 символов).",
+  "modal.phone-placeholder": "Номер родителя",
+  "modal.phone-warning": "Пожалуйста, введите номер телефона.",
+  "modal.submit-button": "Начать",
+  "modal.grade-placeholder": "В каком вы классе?",
+  "modal.grade-warning": "Пожалуйста, выберите класс.",
+  "modal.select-filial": "Выберите филиал",
+  "modal.select-filial-warning": "Пожалуйста, выберите филиал.",
+
+  "filials": {
+    "namangan-uychi": "Наманган (Уйчи)",
+    "namangan-shahar": "Наманган (Город)",
+    "chimgan": "Чимган",
+    "feruza": "Феруза",
+    "yunusobod": "Юнусобод"
+  }
+}

@@ -1,10 +1,16 @@
-// src/App.tsx
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+
 import Home from "./pages/Home";
-import Test from "./pages/Test";
 import Result from "./pages/Result";
+
+import Test from "./pages/Test";
+import { PrimaryTestPage } from "./pages/PrimaryTestPage";
+import { SecondaryTestPage } from "./pages/SecondaryTestPage";
+
 import { telegram } from "./services/telegram";
+
+
 import "./styles/app.css";
 
 export default function App() {
@@ -16,6 +22,8 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/test" element={<Test />} />
+      <Route path="/test/primary" element={<PrimaryTestPage />} />
+      <Route path="/test/secondary" element={<SecondaryTestPage />} />
       <Route path="/result/:key" element={<Result />} />
     </Routes>
   );

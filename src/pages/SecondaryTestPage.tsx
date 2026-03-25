@@ -7,7 +7,6 @@ import { QuizMascot } from "./components/QuizMascot";
 import { ProgressBar } from "./components/ProgressBar";
 import { QuizCard } from "./components/QuizCard";
 import { YesNoButton } from "./components/YesNoButton";
-import { ResultScreen } from "./components/ResultScreen";
 import { FloatingClouds } from "./components/FloatingClouds";
 
 import BG from "../assets/SecondaryTestPageImage.png";
@@ -22,14 +21,13 @@ type TestState = {
 interface Question {
   id: number;
   question: string;
-  correctAnswer: boolean;
 }
 
 const quizQuestions: Question[] = [
-  { id: 1, question: "2 + 2 = 4 ?", correctAnswer: true },
-  { id: 2, question: "Quyosh sovuqmi? ☀️", correctAnswer: false },
-  { id: 3, question: "Mushuk 'miyov' deydimi? 🐱", correctAnswer: true },
-  { id: 4, question: "Baliq daraxtda yashaydimi? 🐟", correctAnswer: false },
+  { id: 1, question: "2 + 2 = ?" },
+  { id: 2, question: "Quyosh qanday? ☀️" },
+  { id: 3, question: "Mushuk nima deydi? 🐱" },
+  { id: 4, question: "Baliq qayerda yashaydi? 🐟" },
 ];
 
 export function SecondaryTestPage() {
@@ -40,7 +38,7 @@ export function SecondaryTestPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [showResult, setShowResult] = useState(false);
+  const [showResult] = useState(false);
   const [mascotMood, setMascotMood] = useState<
     "happy" | "excited" | "thinking"
   >("thinking");
@@ -58,22 +56,16 @@ export function SecondaryTestPage() {
     if (selectedAnswer !== null) return;
 
     setSelectedAnswer(index);
-    const isCorrect =
-      quizQuestions[currentQuestion].correctAnswer === (index === 0);
 
-    if (isCorrect) {
-      setScore(score + 1);
-      setMascotMood("excited");
+    setScore(score + 1);
+    setMascotMood("excited");
 
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ["#FFD700", "#FF6347", "#00CED1", "#32CD32", "#FF69B4"],
-      });
-    } else {
-      setMascotMood("happy");
-    }
+    confetti({
+      particleCount: 80,
+      spread: 60,
+      origin: { y: 0.6 },
+      colors: ["#FFD700", "#FF8C00", "#00CED1", "#32CD32"],
+    });
 
     setTimeout(() => {
       if (currentQuestion < quizQuestions.length - 1) {
@@ -81,7 +73,20 @@ export function SecondaryTestPage() {
         setSelectedAnswer(null);
         setMascotMood("thinking");
       } else {
-        setShowResult(true);
+        const payload = {
+          name: state.studentName,
+          phone: state.parentPhone,
+          grade: state.grade,
+          categoryScores: {
+            playful: score + 1,
+            creative: Math.floor(Math.random() * 10) + 1,
+            smart: Math.floor(Math.random() * 10) + 1,
+            active: Math.floor(Math.random() * 10) + 1,
+          },
+        };
+
+        const encoded = btoa(JSON.stringify(payload));
+        navigate(`/result/${encoded}`);
       }
     }, 800);
   };
@@ -156,47 +161,17 @@ export function SecondaryTestPage() {
                   type="yes"
                   onClick={() => handleAnswerClick(0)}
                   disabled={selectedAnswer !== null}
-                  state={
-                    selectedAnswer === null
-                      ? "default"
-                      : selectedAnswer === 0
-                        ? quizQuestions[currentQuestion].correctAnswer
-                          ? "correct"
-                          : "incorrect"
-                        : "default"
-                  }
+                  state="default"
                 />
                 <YesNoButton
                   type="no"
                   onClick={() => handleAnswerClick(1)}
                   disabled={selectedAnswer !== null}
-                  state={
-                    selectedAnswer === null
-                      ? "default"
-                      : selectedAnswer === 1
-                        ? !quizQuestions[currentQuestion].correctAnswer
-                          ? "correct"
-                          : "incorrect"
-                        : "default"
-                  }
+                  state="default"
                 />
               </div>
             </QuizCard>
-          ) : (
-            <div className="bg-[var(--card)] text-[var(--card-foreground)] p-6 rounded-[var(--radius)] shadow-lg">
-              <ResultScreen
-                score={score}
-                total={quizQuestions.length}
-                onRestart={() => {
-                  setCurrentQuestion(0);
-                  setScore(0);
-                  setSelectedAnswer(null);
-                  setShowResult(false);
-                  setMascotMood("thinking");
-                }}
-              />
-            </div>
-          )}
+          ) : null}
         </AnimatePresence>
       </div>
       {[...Array(6)].map((_, i) => (

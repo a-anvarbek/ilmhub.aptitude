@@ -10,10 +10,10 @@ export function ResultScreen({ score, total, onRestart }: ResultScreenProps) {
   const percentage = (score / total) * 100;
   const message =
     percentage >= 80
-      ? '🎉 Amazing!'
+      ? '🎉 Ajoyib!'
       : percentage >= 60
-      ? '👏 Great Job!'
-      : '💪 Keep Practicing!';
+      ? '👏 Juda Yaxshi!'
+      : '💪 Mashq qilishda davom eting!';
 
   const mascotEmoji =
     percentage >= 80 ? '🌟' : percentage >= 60 ? '😊' : '🤗';

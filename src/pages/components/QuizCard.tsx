@@ -28,7 +28,7 @@ export function QuizCard({ question, onSoundClick, children }: QuizCardProps) {
 
       {/* Question */}
       <motion.h2
-        className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-14 text-gray-800 px-12"
+        className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-14 !text-black px-12"
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2 }}

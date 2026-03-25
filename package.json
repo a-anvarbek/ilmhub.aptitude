@@ -12,7 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
     "body-parser": "^2.2.0",
-    "canvas-confetti": "^1.9.3",
+    "canvas-confetti": "^1.9.4",
     "chart.js": "^4.5.0",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",

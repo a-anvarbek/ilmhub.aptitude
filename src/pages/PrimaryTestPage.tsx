@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import confetti from "canvas-confetti";
 import { AnimatePresence } from "motion/react";
 import { motion } from "motion/react";
+import { Star, Rainbow, Balloon, Palette } from "lucide-react";
 import { QuizMascot } from "./components/QuizMascot";
 import { ProgressBar } from "./components/ProgressBar";
 import { QuizCard } from "./components/QuizCard";
@@ -20,14 +20,13 @@ type TestState = {
 interface Question {
   id: number;
   question: string;
-  correctAnswer: boolean;
 }
 
 const quizQuestions: Question[] = [
-  { id: 1, question: "2 + 2 = 4 ?", correctAnswer: true },
-  { id: 2, question: "Quyosh sovuqmi? ☀️", correctAnswer: false },
-  { id: 3, question: "Mushuk 'miyov' deydimi? 🐱", correctAnswer: true },
-  { id: 4, question: "Baliq daraxtda yashaydimi? 🐟", correctAnswer: false },
+  { id: 1, question: "2 + 2 = 4 ?" },
+  { id: 2, question: "Quyosh sovuqmi? ☀️" },
+  { id: 3, question: "Mushuk 'miyov' deydimi? 🐱" },
+  { id: 4, question: "Baliq daraxtda yashaydimi? 🐟" },
 ];
 
 export function PrimaryTestPage() {
@@ -56,21 +55,9 @@ export function PrimaryTestPage() {
     if (selectedAnswer !== null) return;
 
     setSelectedAnswer(index);
-    const isCorrect = quizQuestions[currentQuestion].correctAnswer === (index === 0);
-
-    if (isCorrect) {
-      setScore(score + 1);
-      setMascotMood("excited");
-
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#FFD700', '#FF6347', '#00CED1', '#32CD32', '#FF69B4'],
-      });
-    } else {
-      setMascotMood("happy");
-    }
+    
+    setScore(score + 1);
+    setMascotMood("happy");
 
     setTimeout(() => {
       if (currentQuestion < quizQuestions.length - 1) {
@@ -78,48 +65,64 @@ export function PrimaryTestPage() {
         setSelectedAnswer(null);
         setMascotMood("thinking");
       } else {
-        setShowResult(true);
+        const categoryScores = {
+          tech: Math.floor(Math.random() * 10) + 1,
+          art: Math.floor(Math.random() * 10) + 1,
+          science: Math.floor(Math.random() * 10) + 1,
+          nature: Math.floor(Math.random() * 10) + 1,
+        };
+
+        const payload = {
+          name: studentName,
+          phone: state.parentPhone,
+          grade,
+          categoryScores,
+        };
+
+        const encoded = btoa(JSON.stringify(payload));
+
+        navigate(`/result/${encoded}`);
       }
     }, 800);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-300 via-purple-300 to-blue-300 flex flex-col items-center justify-center p-4 md:p-8 overflow-x-hidden relative">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-300 via-teal-300 to-indigo-300 flex flex-col items-center justify-center p-4 md:p-8 overflow-x-hidden relative">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-10 left-10 text-6xl"
+          className="absolute top-10 left-10 w-24 h-24"
           animate={{ y: [0, -20, 0], rotate: [0, 10, -10, 0] }}
           transition={{ duration: 3, repeat: Infinity }}
         >
-          ⭐
+          <Star className="w-full h-full text-emerald-500" />
         </motion.div>
         <motion.div
-          className="absolute top-20 right-20 text-5xl"
+          className="absolute top-20 right-20 w-20 h-20"
           animate={{ y: [0, 20, 0], rotate: [0, -10, 10, 0] }}
           transition={{ duration: 4, repeat: Infinity }}
         >
-          🌈
+          <Rainbow className="w-full h-full text-teal-500" />
         </motion.div>
         <motion.div
-          className="absolute bottom-20 left-20 text-5xl"
+          className="absolute bottom-20 left-20 w-20 h-20"
           animate={{ y: [0, -15, 0], x: [0, 10, 0] }}
           transition={{ duration: 3.5, repeat: Infinity }}
         >
-          🎈
+          <Balloon className="w-full h-full text-indigo-500" />
         </motion.div>
         <motion.div
-          className="absolute bottom-32 right-32 text-6xl"
+          className="absolute bottom-32 right-32 w-24 h-24"
           animate={{ rotate: [0, 360] }}
           transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
         >
-          🎨
+          <Palette className="w-full h-full text-teal-600" />
         </motion.div>
       </div>
 
       {/* Background effects */}
       <FloatingClouds />
 
-      <div className="relative z-10 flex flex-col items-center gap-6 w-full max-w-4xl">
+      <div className="relative z-10 flex flex-col items-center gap-8 w-full max-w-4xl">
         
         <h1 className="text-2xl font-bold text-center text-[var(--foreground)]">
           {studentName} | {grade}-sinf | {branch}
@@ -144,34 +147,18 @@ export function PrimaryTestPage() {
               question={quizQuestions[currentQuestion].question}
               onSoundClick={() => {}}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 <YesNoButton
                   type="yes"
                   onClick={() => handleAnswerClick(0)}
                   disabled={selectedAnswer !== null}
-                  state={
-                    selectedAnswer === null
-                      ? 'default'
-                      : selectedAnswer === 0
-                      ? quizQuestions[currentQuestion].correctAnswer
-                        ? 'correct'
-                        : 'incorrect'
-                      : 'default'
-                  }
+                  state="default"
                 />
                 <YesNoButton
                   type="no"
                   onClick={() => handleAnswerClick(1)}
                   disabled={selectedAnswer !== null}
-                  state={
-                    selectedAnswer === null
-                      ? 'default'
-                      : selectedAnswer === 1
-                      ? !quizQuestions[currentQuestion].correctAnswer
-                        ? 'correct'
-                        : 'incorrect'
-                      : 'default'
-                  }
+                  state="default"
                 />
               </div>
             </QuizCard>

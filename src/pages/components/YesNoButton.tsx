@@ -12,15 +12,13 @@ export function YesNoButton({ type, onClick, disabled, state = 'default' }: YesN
   
   const config = {
     yes: {
-      text: 'YES!',
-      emoji: '✅',
+      text: 'HA!',
       icon: Check,
       defaultColors: 'bg-green-400 hover:bg-green-500 border-green-600',
       glowColor: 'shadow-green-400',
     },
     no: {
-      text: 'NO!',
-      emoji: '❌',
+      text: "YO'Q!",
       icon: X,
       defaultColors: 'bg-red-400 hover:bg-red-500 border-red-600',
       glowColor: 'shadow-red-400',
@@ -55,9 +53,9 @@ export function YesNoButton({ type, onClick, disabled, state = 'default' }: YesN
     <motion.button
       onClick={onClick}
       disabled={disabled}
-      className={`relative overflow-hidden w-full px-12 py-10 font-bold text-4xl md:text-5xl text-white shadow-2xl border-8 transition-all ${stateColors[state]} disabled:opacity-50 disabled:cursor-not-allowed`}
+      className={`relative overflow-hidden w-full px-12 py-10 font-bold text-4xl md:text-5xl text-white shadow-2xl border-8 transition-colors duration-100 ease-out ${stateColors[state]} disabled:opacity-50 disabled:cursor-not-allowed`}
       style={{ borderRadius: "48px" }}
-      whileHover={!disabled ? { scale: 1.05, y: -5 } : {}}
+      whileHover={!disabled ? { scale: 1.05, y: -5, transition: { duration: 0.1 } } : {}}
       whileTap={!disabled ? { scale: 0.95 } : {}}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ 
@@ -73,15 +71,14 @@ export function YesNoButton({ type, onClick, disabled, state = 'default' }: YesN
           animate={state === 'correct' ? { rotate: [0, 360, 360, 0], scale: [1, 1.3, 1.3, 1] } : {}}
           transition={{ duration: 0.6 }}
         >
-          <Icon className="w-16 h-16 md:w-20 md:h-20" strokeWidth={4} />
+          <Icon className="w-20 h-20 md:w-30 md:h-15" strokeWidth={4} />
         </motion.div>
         <span>{buttonConfig.text}</span>
         <motion.span 
-          className="text-5xl md:text-6xl"
+          className="text-5xl md:text-3xl"
           animate={state === 'correct' ? { scale: [1, 1.5, 1], rotate: [0, 20, -20, 0] } : {}}
           transition={{ duration: 0.6 }}
         >
-          {buttonConfig.emoji}
         </motion.span>
       </div>
 

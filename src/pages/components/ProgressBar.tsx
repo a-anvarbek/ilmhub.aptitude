@@ -18,8 +18,8 @@ export function ProgressBar({ current, total }: ProgressBarProps) {
           transition={{ duration: 0.5, ease: "easeOut" }}
         />
       </div>
-      <p className="text-center mt-2 font-bold text-white text-4xl">
-        Question {current} of {total}
+      <p className="text-center mt-2 font-bold text-white text-lg">
+      {total} dan {current} Savol
       </p>
     </div>
   );

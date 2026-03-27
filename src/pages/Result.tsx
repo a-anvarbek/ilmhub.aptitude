@@ -81,18 +81,20 @@ export default function Result() {
 
   useEffect(() => {
     if (chartReady) {
-      try { window.playConfetti?.(); } catch { }
+      setTimeout(() => {
+        try { window.playConfetti?.(); } catch {}
+      }, 100);
     }
   }, [chartReady]);
 
   if (!categoryScores) return null;
 
-  const labels = Object.keys(categoryScores).map(k => t(k.toLowerCase()));
+  const labels = Object.keys(categoryScores);
   const data = {
     labels,
     datasets: [{
       data: Object.values(categoryScores),
-      backgroundColor: Object.values(categoryScores).map(() => `hsla(${Math.floor(Math.random() * 360)},70%,55%,0.8)`)
+      backgroundColor: ['#6366f1', '#22c55e', '#f59e0b', '#ef4444']
     }]
   };
 
@@ -130,7 +132,7 @@ export default function Result() {
           dangerouslySetInnerHTML={{ __html: t(`${topCategory ?? Object.keys(categoryScores)[0] ?? ''}-explanation`) as string }}
         />
 
-        {chartReady && <PolarArea data={data} />}
+        {chartReady && <div className="mt-6"><PolarArea data={data} /></div>}
       </div>
 
       <div className="position-absolute bottom-0 me-10 mb-5">

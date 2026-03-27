@@ -1,16 +1,16 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import confetti from "canvas-confetti";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
+import { useTranslation } from "react-i18next";
 
-import { QuizMascot } from "./components/QuizMascot";
 import { ProgressBar } from "./components/ProgressBar";
-import { QuizCard } from "./components/QuizCard";
-import { YesNoButton } from "./components/YesNoButton";
-import { ResultScreen } from "./components/ResultScreen";
 import { FloatingClouds } from "./components/FloatingClouds";
+import BinaryQuestionComponent from "../components/BinaryQuestion";
 
 import BG from "../assets/SecondaryTestPageImage.png";
+import type { BinaryQuestion } from "../components/BinaryQuestion";
+import { telegram } from "../services/telegram";
+import { sendAttemptToTelegram } from "../services/telegramBotService";
 
 type TestState = {
   studentName: string;
@@ -19,76 +19,109 @@ type TestState = {
   branch: string;
 };
 
-interface Question {
-  id: number;
-  question: string;
-  correctAnswer: boolean;
-}
-
-const quizQuestions: Question[] = [
-  { id: 1, question: "2 + 2 = 4 ?", correctAnswer: true },
-  { id: 2, question: "Quyosh sovuqmi? ☀️", correctAnswer: false },
-  { id: 3, question: "Mushuk 'miyov' deydimi? 🐱", correctAnswer: true },
-  { id: 4, question: "Baliq daraxtda yashaydimi? 🐟", correctAnswer: false },
-];
-
 export function SecondaryTestPage() {
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as TestState | null;
 
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [showResult, setShowResult] = useState(false);
-  const [mascotMood, setMascotMood] = useState<
-    "happy" | "excited" | "thinking"
-  >("thinking");
+  const [questions, setQuestions] = useState<BinaryQuestion[]>([]);
+  const [index, setIndex] = useState(0);
+  const [categoryScores, setCategoryScores] = useState<Record<string, number>>(
+    {},
+  );
+  const [isTelegram, setIsTelegram] = useState(false);
 
+  // redirect agar state bo‘lmasa
   useEffect(() => {
-    document.body.style.fontFamily = "'Fredoka', sans-serif";
-  }, []);
+    if (!state) {
+      navigate("/test", { replace: true });
+    }
+  }, [state, navigate]);
 
-  if (!state) {
-    navigate("/test", { replace: true });
-    return null;
-  }
+  // data yuklash
+  useEffect(() => {
+    (async () => {
+      const isMini = await telegram.isMiniApp();
+      setIsTelegram(isMini);
+    })();
 
-  const handleAnswerClick = (index: number) => {
-    if (selectedAnswer !== null) return;
+    const culture =
+      localStorage.getItem("blazor.culture") ?? i18n.language ?? "uz-Latn";
 
-    setSelectedAnswer(index);
-    const isCorrect =
-      quizQuestions[currentQuestion].correctAnswer === (index === 0);
+    fetch(`/data/test-new.${culture}.json`)
+      .then((r) => r.json())
+      .then((rawData: any[]) => {
+        const data: BinaryQuestion[] = rawData.map((item) => ({
+          Statement: item.Statement ?? item.statement ?? "",
+          Category: item.Category ?? item.category ?? "",
+        }));
 
-    if (isCorrect) {
-      setScore(score + 1);
-      setMascotMood("excited");
+        // shuffle
+        const shuffled = data.sort(() => Math.random() - 0.5);
 
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ["#FFD700", "#FF6347", "#00CED1", "#32CD32", "#FF69B4"],
-      });
-    } else {
-      setMascotMood("happy");
+        setQuestions(shuffled);
+
+        // category init
+        const cats: Record<string, number> = {};
+        shuffled.forEach((q) => {
+          if (q.Category) cats[q.Category] = 0;
+        });
+
+        setCategoryScores(cats);
+      })
+      .catch((err) => console.error("Error loading test:", err));
+  }, [i18n.language]);
+
+  const handleSelected = async (result: { yes: boolean; category: string }) => {
+    const updatedScores = {
+      ...categoryScores,
+      [result.category]:
+        (categoryScores[result.category] || 0) + (result.yes ? 1 : 0),
+    };
+
+    setCategoryScores(updatedScores);
+
+    const nextIndex = index + 1;
+
+    // quiz tugadi
+    if (nextIndex >= questions.length) {
+      const attemptData = {
+        name: state?.studentName,
+        phone: state?.parentPhone,
+        grade: state?.grade,
+        filial: state?.branch,
+        categoryScores: updatedScores,
+      };
+
+      try {
+        await sendAttemptToTelegram(attemptData);
+      } catch (e) {
+        console.warn("Telegramga yuborilmadi", e);
+      }
+
+      const payload = encodeURIComponent(
+        btoa(unescape(encodeURIComponent(JSON.stringify(attemptData)))),
+      );
+
+      navigate(`/result/${payload}`);
+      return;
     }
 
-    setTimeout(() => {
-      if (currentQuestion < quizQuestions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1);
-        setSelectedAnswer(null);
-        setMascotMood("thinking");
-      } else {
-        setShowResult(true);
-      }
-    }, 800);
+    setIndex(nextIndex);
   };
+
+  const currentQuestion = questions[index];
+
+  const progress = questions.length
+    ? Math.round((index / questions.length) * 100)
+    : 0;
+
+  if (!currentQuestion) return null;
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 overflow-x-hidden relative"
+      className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden"
       style={{
         backgroundImage: `url(${BG})`,
         backgroundSize: "cover",
@@ -96,110 +129,27 @@ export function SecondaryTestPage() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {" "}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-10 left-10 text-6xl"
-          animate={{ y: [0, -20, 0], rotate: [0, 10, -10, 0] }}
-          transition={{ duration: 3, repeat: Infinity }}
-        >
-          ⭐
-        </motion.div>
-        <motion.div
-          className="absolute top-20 right-20 text-5xl"
-          animate={{ y: [0, 20, 0], rotate: [0, -10, 10, 0] }}
-          transition={{ duration: 4, repeat: Infinity }}
-        >
-          🌈
-        </motion.div>
-        <motion.div
-          className="absolute bottom-20 left-20 text-5xl"
-          animate={{ y: [0, -15, 0], x: [0, 10, 0] }}
-          transition={{ duration: 3.5, repeat: Infinity }}
-        >
-          🎈
-        </motion.div>
-        <motion.div
-          className="absolute bottom-32 right-32 text-6xl"
-          animate={{ rotate: [0, 360] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        >
-          🎨
-        </motion.div>
-      </div>
       <FloatingClouds />
-      <div className="relative z-10 flex flex-col items-center gap-6 w-full max-w-4xl">
+
+      <div className="relative z-10 flex flex-col items-center gap-6 w-full max-w-3xl">
         <motion.div
-          initial={{ scale: 0, y: -50 }}
-          animate={{ scale: 1, y: 0 }}
-          transition={{ type: "spring", duration: 0.8 }}
+          key={index}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="w-full"
         >
-          <QuizMascot mood={mascotMood} />
+          <BinaryQuestionComponent
+            question={currentQuestion}
+            onSelected={handleSelected}
+          />
         </motion.div>
 
-        {!showResult && (
-          <ProgressBar
-            current={currentQuestion + 1}
-            total={quizQuestions.length}
-          />
-        )}
-
-        <AnimatePresence mode="wait">
-          {!showResult ? (
-            <QuizCard
-              key={currentQuestion}
-              question={quizQuestions[currentQuestion].question}
-              onSoundClick={() => {}}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <YesNoButton
-                  type="yes"
-                  onClick={() => handleAnswerClick(0)}
-                  disabled={selectedAnswer !== null}
-                  state={
-                    selectedAnswer === null
-                      ? "default"
-                      : selectedAnswer === 0
-                        ? quizQuestions[currentQuestion].correctAnswer
-                          ? "correct"
-                          : "incorrect"
-                        : "default"
-                  }
-                />
-                <YesNoButton
-                  type="no"
-                  onClick={() => handleAnswerClick(1)}
-                  disabled={selectedAnswer !== null}
-                  state={
-                    selectedAnswer === null
-                      ? "default"
-                      : selectedAnswer === 1
-                        ? !quizQuestions[currentQuestion].correctAnswer
-                          ? "correct"
-                          : "incorrect"
-                        : "default"
-                  }
-                />
-              </div>
-            </QuizCard>
-          ) : (
-            <div className="bg-[var(--card)] text-[var(--card-foreground)] p-6 rounded-[var(--radius)] shadow-lg">
-              <ResultScreen
-                score={score}
-                total={quizQuestions.length}
-                onRestart={() => {
-                  setCurrentQuestion(0);
-                  setScore(0);
-                  setSelectedAnswer(null);
-                  setShowResult(false);
-                  setMascotMood("thinking");
-                }}
-              />
-            </div>
-          )}
-        </AnimatePresence>
+        <ProgressBar current={index + 1} total={questions.length} />
       </div>
-      {[...Array(6)].map((_, i) => (
+
+      {/* floating bubbles */}
+      {[...Array(5)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-16 h-16 md:w-24 md:h-24 bg-white/20 rounded-full"

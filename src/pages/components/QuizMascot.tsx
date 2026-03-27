@@ -32,7 +32,7 @@ export function QuizMascot({ mood }: QuizMascotProps) {
       }}
     >
       <div
-        className="w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center shadow-lg"
+        className="w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center shadow-lg"
         style={{
           backgroundImage: `url(${BG})`,
           backgroundSize: "cover",

@@ -1,5 +1,6 @@
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import BG from "../assets/loginImage.png";
 
 export default function Test() {
   const navigate = useNavigate();
@@ -54,12 +55,29 @@ export default function Test() {
   };
 
   return (
-    <div className="modal d-block modal-sheet bg-transparent p-4 py-md-5">
-      <div className="modal-dialog">
-        <div className="modal-content rounded-4 shadow">
+    <div
+      className="min-h-screen flex items-center justify-center p-4 py-md-5 relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${BG})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Background circles */}
+      <div className="absolute top-10 left-10 w-72 h-72 bg-purple-300 rounded-full opacity-30 blur-3xl"></div>
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
+      <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-blue-300 rounded-full opacity-20 blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="modal-dialog relative z-10">
+        <div
+          className="modal-content rounded-4 shadow bg-white/80 backdrop-blur-md p-2"
+          style={{ borderRadius: "40px" }}
+        >
           {/* HEADER */}
           <div className="modal-header p-5 pb-4 border-bottom-0">
-            <h1 className="fw-bold mb-0 fs-2">Ilmhub Kids Qobiliyat Testi</h1>
+            <h1 className="fw-bold mb-0 fs-2 text-center text-white">
+              Ilmhub Kids Qobiliyat Testi
+            </h1>
           </div>
 
           {/* BODY */}
@@ -70,7 +88,7 @@ export default function Test() {
                 <input
                   name="studentName"
                   type="text"
-                  className="form-control rounded-3"
+                  className="form-control rounded-3 bg-white/90"
                   id="name-input"
                   placeholder="O'quvchi ismi"
                 />
@@ -86,7 +104,7 @@ export default function Test() {
                   <input
                     name="parentPhone"
                     type="tel"
-                    className="form-control"
+                    className="form-control bg-white/90"
                     id="phone-input"
                     placeholder="Telefon raqami"
                   />
@@ -103,7 +121,7 @@ export default function Test() {
                   type="number"
                   min={1}
                   max={11}
-                  className="form-control rounded-3"
+                  className="form-control rounded-3 bg-white/90"
                   id="grade-input"
                   placeholder="Sinf"
                 />
@@ -117,7 +135,7 @@ export default function Test() {
                 <select
                   name="branch"
                   id="branch-select"
-                  className="form-select text-secondary fw-normal"
+                  className="form-select fw-normal bg-white/90"
                   defaultValue=""
                 >
                   <option value="" hidden />
@@ -135,7 +153,7 @@ export default function Test() {
               {/* BUTTON */}
               <button
                 type="submit"
-                className="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
+                className="w-100 mb-2 btn btn-lg rounded-3 btn-primary shadow-lg"
               >
                 Boshladik
               </button>

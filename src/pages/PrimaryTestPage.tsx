@@ -23,10 +23,27 @@ interface Question {
 }
 
 const quizQuestions: Question[] = [
-  { id: 1, question: "2 + 2 = 4 ?" },
-  { id: 2, question: "Quyosh sovuqmi? ☀️" },
-  { id: 3, question: "Mushuk 'miyov' deydimi? 🐱" },
-  { id: 4, question: "Baliq daraxtda yashaydimi? 🐟" },
+  { id: 1, question: "Narsalarni buzib, ichini ko‘rish yoki ularni tuzatishni yoqtiraman." },
+  { id: 2, question: "O‘zim robot, dastur yoki kichik loyiha yasab ko‘rishni xohlayman." },
+  { id: 3, question: "Hisob-kitob qilish yoki jumboqlarni yechishni yoqtiraman." },
+  { id: 4, question: "Qanday ishlashini bilish uchun texnika yoki mexanizmlarni ko‘rishni yaxshi ko‘raman." },
+  { id: 5, question: "Kompyuter yoki telefon orqali yangi dasturlarni o‘rganish menga qiziq." },
+  { id: 6, question: "Nimalarnidir loyihalash, chizma chizish yoki yangi g‘oya o‘ylab topishni yoqtiraman." },
+  { id: 7, question: "O‘ylab topgan narsam boshqalarni hayratda qoldirsa, juda xursand bo‘laman." },
+  { id: 8, question: "Rasm chizish, qo‘shiq aytish yoki sahnada chiqish menga yoqadi." },
+  { id: 9, question: "Teatr, muzey yoki ko‘rgazmaga borish men uchun zavqli." },
+  { id: 10, question: "O‘zim yozgan hikoya yoki she’rni boshqalarga o‘qib berishni yoqtiraman." },
+  { id: 11, question: "Bo‘sh vaqtimda kitob o‘qish yoki musiqa tinglash bilan shug‘ullanaman." },
+  { id: 12, question: "Narsalarni chiroyli qilish, bezash yoki dizaynini o‘ylab topishni yoqtiraman." },
+  { id: 13, question: "Do‘stlarim meni ijodkor deb hisoblashadi." },
+  { id: 14, question: "Yangi uslub yoki san’at sirlarini o‘rganishga harakat qilaman." },
+  { id: 15, question: "Hayvonlarga g‘amxo‘rlik qilishni yoki ularni boqishni yoqtiraman." },
+  { id: 16, question: "O‘simlik ekish va ularni parvarish qilish menga yoqadi." },
+  { id: 17, question: "Tabiatda nimalar qanday o‘sishini va o‘zgarishini kuzatishni yoqtiraman." },
+  { id: 18, question: "Hayvonlar yoki tabiat haqida hujjatli filmlar tomosha qilish menga qiziq." },
+  { id: 19, question: "Tabiat haqida yangi narsalarni o‘rganishni xohlayman." },
+  { id: 20, question: "Tajribalar o‘tkazish yoki kuzatuvlar qilish menga zavq beradi." },
+  { id: 21, question: "Hayvonlar va o‘simliklar bilan bog‘liq kasblar (vrach, biolog) haqida o‘ylab ko‘rganman." }
 ];
 
 export function PrimaryTestPage() {

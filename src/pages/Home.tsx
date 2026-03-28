@@ -70,14 +70,117 @@ export default function Home() {
 // import { sendAttemptToTelegram } from '../services/telegramBotService';
 
 // export default function Test() {
+//   const { t, i18n } = useTranslation();
+//   const navigate = useNavigate();
 
+//   const [questions, setQuestions] = useState<BinaryQuestion[]>([]);
+//   const [index, setIndex] = useState(0);
+//   const [started, setStarted] = useState(false);
+//   const [categoryScores, setCategoryScores] = useState<Record<string, number>>({});
+//   const [name, setName] = useState('');
+//   const [phone, setPhone] = useState('');
+//   const [grade, setGrade] = useState('');
+//   const [isTelegram, setIsTelegram] = useState(false);
+//   const [filial, setFilial] = useState<string>('');
+//   const [filialLabel, setFilialLabel] = useState<string>('');
 
+//   // 🔤 Localized filial list
+//   const filialOptions = useMemo(() => [
+//     { value: 'namangan-uychi', label: t('filials.namangan-uychi'), short: 'Namangan — Uychi' },
+//     { value: 'namangan-shahar', label: t('filials.namangan-shahar'), short: 'Namangan — Shahar' },
+//     { value: 'chimgan', label: t('filials.chimgan'), short: 'Chimgan' },
+//     { value: 'feruza', label: t('filials.feruza'), short: 'Feruza' },
+//     { value: 'yunusobod', label: t('filials.yunusobod'), short: 'Yunusobod' }
+//   ], [t]);
 
-    
+//   useEffect(() => {
+//     (async () => {
+//       const isMini = await telegram.isMiniApp();
+//       setIsTelegram(isMini);
+//       if (isMini) {
+//         const u = await telegram.getUser() as any;
+//         setName(u?.first_name ?? u?.last_name ?? u?.username ?? '');
+//       }
+//     })();
 
+//     const culture = localStorage.getItem('blazor.culture') ?? i18n.language ?? 'uz-Latn';
+//     const file = `/data/test-new.${culture}.json`;
 
+//     fetch(file)
+//       .then(r => r.json())
+//       .then((rawData: any[]) => {
+//         const data = (rawData || []).map(item => ({
+//           Statement: item.Statement ?? item.statement ?? '',
+//           Category: item.Category ?? item.category ?? ''
+//         })) as BinaryQuestion[];
 
- 
+//         const shuffled = shuffle(data) || [];
+//         setQuestions(shuffled);
+
+//         const cats: Record<string, number> = {};
+//         shuffled.forEach(q => {
+//           if (q.Category) cats[q.Category] = 0;
+//         });
+//         setCategoryScores(cats);
+//       })
+//       .catch(err => console.error('Loading test failed', err));
+//   }, [i18n.language]);
+
+//   const currentQuestion = questions[index];
+//   const progress = questions.length ? Math.round((index / questions.length) * 100) : 0;
+
+//   const validatePhone = (p: string) => /^\d{2}\d{7}$/.test(p);
+//   const isNameValid = name.length >= 3;
+//   const isGradeValid = (() => {
+//     const n = parseInt(grade || '0', 10);
+//     return n > 0 && n < 12;
+//   })();
+
+//   const start = async (e?: React.FormEvent) => {
+//     e?.preventDefault();
+//     if ((isTelegram || (isNameValid && validatePhone(phone) && isGradeValid)) && filial) {
+//       const timestamp = Math.floor(Date.now() / 1000);
+//       const storageKey = `${slugify(name)}:${phone}:${grade}:${filial}:${timestamp}`;
+//       sessionStorage.setItem('user', storageKey);
+//       setStarted(true);
+//       await telegram.expand();
+//     }
+//   };
+
+//   const handleSelected = async (result: { yes: boolean; category: string }) => {
+//     setCategoryScores(prev => {
+//       const copy = { ...prev };
+//       copy[result.category] = (copy[result.category] || 0) + (result.yes ? 1 : 0);
+//       return copy;
+//     });
+
+//     const nextIndex = index + 1;
+//     setIndex(nextIndex);
+
+//     if (nextIndex === questions.length) {
+//       const finalScores = { ...categoryScores };
+
+//       const attemptData = {
+//         storageKey: sessionStorage.getItem('user') ?? undefined,
+//         name,
+//         phone,
+//         grade: parseInt(grade || '0', 10),
+//         filial: filialLabel || undefined,
+//         categoryScores: finalScores
+//       };
+
+//       sendAttemptToTelegram(attemptData).catch(e => console.warn('telegram forward failed', e));
+
+//       const payload = encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(attemptData)))));
+//       navigate(`/result/${payload}`);
+//     }
+//   };
+
+//   const onFilialChange = (val: string) => {
+//     setFilial(val);
+//     const opt = filialOptions.find(f => f.value === val);
+//     setFilialLabel(opt ? opt.short : '');
+//   };
 
 //   return (
 //     <div>

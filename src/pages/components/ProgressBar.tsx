@@ -7,7 +7,7 @@ interface ProgressBarProps {
 
 export function ProgressBar({ current, total }: ProgressBarProps) {
   const progress = (current / total) * 100;
-  
+
   return (
     <div className="w-full max-w-md">
       <div className="h-4 bg-white/30 rounded-full overflow-hidden shadow-inner">
@@ -18,8 +18,8 @@ export function ProgressBar({ current, total }: ProgressBarProps) {
           transition={{ duration: 0.5, ease: "easeOut" }}
         />
       </div>
-      <p className="text-center mt-2 font-bold text-white text-lg">
-      {total} dan {current} Savol
+      <p className="text-center mt-2 font-bold text-white text-4xl">
+        {current} - savol {total} dan
       </p>
     </div>
   );

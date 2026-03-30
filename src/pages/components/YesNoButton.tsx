@@ -12,13 +12,11 @@ export function YesNoButton({ type, onClick, disabled, state = 'default' }: YesN
   
   const config = {
     yes: {
-      text: 'HA!',
       icon: Check,
       defaultColors: 'bg-green-400 hover:bg-green-500 border-green-600',
       glowColor: 'shadow-green-400',
     },
     no: {
-      text: "YO'Q!",
       icon: X,
       defaultColors: 'bg-red-400 hover:bg-red-500 border-red-600',
       glowColor: 'shadow-red-400',
@@ -53,7 +51,7 @@ export function YesNoButton({ type, onClick, disabled, state = 'default' }: YesN
     <motion.button
       onClick={onClick}
       disabled={disabled}
-      className={`relative overflow-hidden w-full px-12 py-10 font-bold text-4xl md:text-5xl text-white shadow-2xl border-8 transition-colors duration-100 ease-out ${stateColors[state]} disabled:opacity-50 disabled:cursor-not-allowed`}
+      className={`relative mt-5 overflow-hidden w-full px-12 py-10 font-bold text-4xl md:text-5xl text-white shadow-2xl border-8 transition-colors duration-100 ease-out ${stateColors[state]} disabled:opacity-50 disabled:cursor-not-allowed`}
       style={{ borderRadius: "48px" }}
       whileHover={!disabled ? { scale: 1.05, y: -5, transition: { duration: 0.1 } } : {}}
       whileTap={!disabled ? { scale: 0.95 } : {}}
@@ -73,7 +71,6 @@ export function YesNoButton({ type, onClick, disabled, state = 'default' }: YesN
         >
           <Icon className="w-20 h-20 md:w-30 md:h-15" strokeWidth={4} />
         </motion.div>
-        <span>{buttonConfig.text}</span>
         <motion.span 
           className="text-5xl md:text-3xl"
           animate={state === 'correct' ? { scale: [1, 1.5, 1], rotate: [0, 20, -20, 0] } : {}}

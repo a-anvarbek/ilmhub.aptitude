@@ -1,9 +1,16 @@
 import type { FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BG from "../assets/loginImage.png";
 
 export default function Test() {
   const navigate = useNavigate();
+
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setVisible(true), 80);
+  }, []);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,7 +81,14 @@ export default function Test() {
           style={{ borderRadius: "40px" }}
         >
           {/* HEADER */}
-          <div className="modal-header p-5 pb-4 border-bottom-0">
+          <div
+            className="modal-header p-5 pb-4 border-bottom-0"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0px)" : "translateY(-20px)",
+              transition: "all 0.6s ease"
+            }}
+          >
             <h1 className="fw-bold mb-0 fs-2 text-center text-white">
               Ilmhub Kids Qobiliyat Testi
             </h1>
@@ -84,7 +98,14 @@ export default function Test() {
           <div className="modal-body p-5 pt-0">
             <form onSubmit={handleSubmit}>
               {/* NAME */}
-              <div className="form-floating mb-3">
+              <div
+                className="form-floating mb-3"
+                style={{
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateY(0px)" : "translateY(20px)",
+                  transition: "all 0.7s ease 0.2s"
+                }}
+              >
                 <input
                   name="studentName"
                   type="text"
@@ -98,7 +119,14 @@ export default function Test() {
               </div>
 
               {/* PHONE */}
-              <div className="input-group mb-3">
+              <div
+                className="input-group mb-3"
+                style={{
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateY(0px)" : "translateY(20px)",
+                  transition: "all 0.7s ease 0.35s"
+                }}
+              >
                 <span className="input-group-text">+998</span>
                 <div className="form-floating">
                   <input
@@ -115,7 +143,14 @@ export default function Test() {
               </div>
 
               {/* GRADE */}
-              <div className="form-floating mb-3">
+              <div
+                className="form-floating mb-3"
+                style={{
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateY(0px)" : "translateY(20px)",
+                  transition: "all 0.7s ease 0.5s"
+                }}
+              >
                 <input
                   name="grade"
                   type="number"
@@ -131,7 +166,14 @@ export default function Test() {
               </div>
 
               {/* BRANCH */}
-              <div className="form-floating mb-3">
+              <div
+                className="form-floating mb-3"
+                style={{
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateY(0px)" : "translateY(20px)",
+                  transition: "all 0.7s ease 0.65s"
+                }}
+              >
                 <select
                   name="branch"
                   id="branch-select"
@@ -154,6 +196,11 @@ export default function Test() {
               <button
                 type="submit"
                 className="w-100 mb-2 btn btn-lg rounded-3 btn-primary shadow-lg"
+                style={{
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateY(0px)" : "translateY(20px)",
+                  transition: "all 0.7s ease 0.8s"
+                }}
               >
                 Boshladik
               </button>

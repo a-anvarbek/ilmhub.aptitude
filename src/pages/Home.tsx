@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import BG from "../assets/image.png";
 
 export default function Home() {
   const { t } = useTranslation();
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setVisible(true), 50);
+  }, []);
 
   return (
     <div
@@ -21,7 +27,11 @@ export default function Home() {
           <LanguageSwitcher />
         </div>
 
-        <div className="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div className="row flex-lg-row-reverse align-items-center g-5 py-5" style={{
+          transform: visible ? "translateY(0px)" : "translateY(40px)",
+          opacity: visible ? 1 : 0,
+          transition: "all 0.7s ease"
+        }}>
           <div className="col-10 col-sm-8 col-lg-6 mx-auto">
             {/* <img
               src="/images/hero-1-min.png"
@@ -32,7 +42,11 @@ export default function Home() {
               loading="lazy"
             /> */}
           </div>
-          <div className="col-lg-6">
+          <div className="col-lg-6" style={{
+            transform: visible ? "translateY(0px)" : "translateY(30px)",
+            opacity: visible ? 1 : 0,
+            transition: "all 0.9s ease"
+          }}>
             <div
               dangerouslySetInnerHTML={{
                 __html: t("home-banner-title") as string,
@@ -48,6 +62,11 @@ export default function Home() {
               <Link
                 to="/test"
                 className="btn btn-outline-primary px-4 me-md-2 fs-4 text-decoration-none f-sister"
+                style={{
+                  transform: visible ? "translateY(0px)" : "translateY(20px)",
+                  opacity: visible ? 1 : 0,
+                  transition: "all 1.1s ease"
+                }}
               >
                 {t("start-button")}
               </Link>

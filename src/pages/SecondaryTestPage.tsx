@@ -116,10 +116,12 @@ export function SecondaryTestPage() {
       state?.parentPhone
     }:${state?.grade}:${slugify(state?.branch || "")}:${timestamp}`;
 
-    setCategoryScores((prev) => ({
-      ...prev,
-      [category]: (prev[category] ?? 0) + (isYes ? 1 : 0),
-    }));
+    const nextCategoryScores = {
+      ...categoryScores,
+      [category]: (categoryScores[category] ?? 0) + (isYes ? 1 : 0),
+    };
+
+    setCategoryScores(nextCategoryScores);
 
     setTimeout(() => {
       const nextIndex = index + 1;
@@ -142,10 +144,12 @@ export function SecondaryTestPage() {
           phone: state?.parentPhone,
           grade: state?.grade,
           filial: state?.branch,
-          categoryScores,
+          categoryScores: nextCategoryScores,
         };
 
-        sendAttemptToTelegram(attemptData).catch(() => {});
+        sendAttemptToTelegram(attemptData).catch((err) => {
+          console.error("Failed to send attempt to Telegram:", err);
+        });
 
         const payload = encodeURIComponent(
           btoa(unescape(encodeURIComponent(JSON.stringify(attemptData)))),

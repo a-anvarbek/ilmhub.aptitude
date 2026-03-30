@@ -1,8 +1,14 @@
 // server/index.js (ESM)
 import dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' });
+const result = dotenv.config();
+if (result.error) {
+  console.warn('Warning: Could not load .env file. Environment variables might be missing.');
+} else {
+  console.log('.env file loaded successfully');
+}
 
 import express from 'express';
+import fetch from 'node-fetch';
 
 const app = express();
 const PORT = process.env.PORT || 5174;
@@ -55,16 +61,22 @@ app.post('/api/sendToTelegram', async (req, res) => {
     if (API_SECRET) {
       const key = req.get('x-api-key') || '';
       if (key !== API_SECRET) {
+        console.warn('Unauthorized API key received:', key);
         return res.status(401).json({ ok: false, error: 'Invalid API key' });
       }
+    } else {
+      console.warn('API_SECRET is not set in .env, skipping key check.');
     }
 
     const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
     let CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
     if (!BOT_TOKEN || !CHAT_ID) {
+      console.error('TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is missing from .env');
       return res.status(500).json({ ok: false, error: 'Telegram bot token or chat id not configured' });
     }
+
+    console.log('Attempting to send message to Telegram Chat ID:', CHAT_ID);
 
     const body = req.body || {};
     const { name, phone, grade, categoryScores: rawCategoryScores, storageKey, filial } = body;

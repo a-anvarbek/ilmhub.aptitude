@@ -9,6 +9,7 @@ import { QuizCard } from "./components/QuizCard";
 import { YesNoButton } from "./components/YesNoButton";
 import { ResultScreen } from "./components/ResultScreen";
 import { FloatingClouds } from "./components/FloatingClouds";
+import { sendAttemptToTelegram } from "../services/telegramBotService";
 
 type TestState = {
   studentName: string;
@@ -89,14 +90,21 @@ export function PrimaryTestPage() {
           nature: Math.floor(Math.random() * 10) + 1,
         };
 
-        const payload = {
+        const payloadData = {
           name: studentName,
           phone: state.parentPhone,
           grade,
+          filial: state.branch,
           categoryScores,
         };
 
-        const encoded = btoa(JSON.stringify(payload));
+        sendAttemptToTelegram(payloadData).catch((err) => {
+          console.error("Failed to send attempt to Telegram:", err);
+        });
+
+        const encoded = encodeURIComponent(
+          btoa(unescape(encodeURIComponent(JSON.stringify(payloadData))))
+        );
 
         navigate(`/result/${encoded}`);
       }

@@ -56,27 +56,14 @@ export function YesNoButton({ type, onClick, disabled, state = 'default' }: YesN
       whileHover={!disabled ? { scale: 1.05, y: -5, transition: { duration: 0.1 } } : {}}
       whileTap={!disabled ? { scale: 0.95 } : {}}
       initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ 
-        opacity: 1, 
-        scale: 1,
-        ...shakeAnimation,
-        ...glowAnimation
-      }}
-      transition={{ duration: 0.3 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.15 }}
     >
       <div className="flex items-center justify-center gap-6">
-        <motion.div
-          animate={state === 'correct' ? { rotate: [0, 360, 360, 0], scale: [1, 1.3, 1.3, 1] } : {}}
-          transition={{ duration: 0.6 }}
-        >
+        <div>
           <Icon className="w-20 h-20 md:w-30 md:h-15" strokeWidth={4} />
-        </motion.div>
-        <motion.span 
-          className="text-5xl md:text-3xl"
-          animate={state === 'correct' ? { scale: [1, 1.5, 1], rotate: [0, 20, -20, 0] } : {}}
-          transition={{ duration: 0.6 }}
-        >
-        </motion.span>
+        </div>
+        <span className="text-5xl md:text-3xl"></span>
       </div>
 
       {state === 'correct' && (
